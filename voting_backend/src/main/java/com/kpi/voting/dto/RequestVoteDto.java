@@ -10,6 +10,8 @@ public class RequestVoteDto {
     @NotNull
     private boolean answer;
 
+    private String answerString;
+
     @NotNull
     private Long userId;
 
@@ -46,5 +48,13 @@ public class RequestVoteDto {
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public String getAnswerString() {
+        return answerString;
+    }
+
+    public void setAnswerString(String answerString) {
+        this.answerString = answerString;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.naming.OperationNotSupportedException;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -43,10 +45,20 @@ public class VoteService {
         newVote.setUserId(vote.getUserId());
         newVote.setAnswer(vote.isAnswer());
         newVote.setQuestion(question);
+        newVote.setAnswerString(vote.getAnswerString());
 
         newVote = voteRepository.save(newVote);
         voteRepository.flush();
 
         return (newVote.getId() != null);
+    }
+
+
+    public Collection<String> getAnswerStrings(Long id){
+        return voteRepository.getAnswerStrings(id);
+    }
+
+    public List<Vote> getAllVotes() {
+        return voteRepository.findAll();
     }
 }
