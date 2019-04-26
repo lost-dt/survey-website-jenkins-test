@@ -1,9 +1,9 @@
 export class Question {
-  id: bigint;
-  title: string;
-
-  constructor(id: bigint = null, title: string = null) {
-    this.id = id;
+  static globalId = 3;
+  public id: number;
+  public title: string;
+  constructor(title: string) {
+    this.id = Question.globalId++;
     this.title = title;
   }
 }

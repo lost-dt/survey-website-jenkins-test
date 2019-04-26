@@ -1,0 +1,6 @@
+<div>
+  <form (ngSubmit)="onSubmit(); newQuestionForm.reset();" #newQuestionForm="ngForm">
+    <input type="text" name="newTitle" [(ngModel)]="newTitle" placeholder="Input new question" required/>
+    <button type="submit" [disabled]="newQuestionForm.form.invalid">Submit new</button>
+  </form>
+</div>

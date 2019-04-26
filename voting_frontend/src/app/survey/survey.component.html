@@ -1,0 +1,5 @@
+<form class="survey" *ngIf="questions.length" #surveyFrom="ngForm">
+  <app-question *ngFor="let q of questions" [question]="q"></app-question>
+  <button type="submit" [disabled]="surveyFrom.form.invalid">Submit your answer</button>
+</form>
+<app-question-form></app-question-form>

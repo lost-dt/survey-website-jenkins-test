@@ -1,27 +1,52 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { SurveyComponent } from './survey/survey.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { QuestionComponent } from './question/question.component';
-import { AnswerComponent } from './answer/answer.component';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { QuestionListComponent } from './question-list/question-list.component';
+import { QuestionFormComponent } from './question-form/question-form.component';
 
+const appRoutes: Routes = [
+  {
+    path: 'admin',
+    component: AdminDashboardComponent
+  },
+  {
+    path: '',
+    component: SurveyComponent
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
+    AdminDashboardComponent,
+    PageNotFoundComponent,
+    SurveyComponent,
     QuestionComponent,
-    AnswerComponent
+    QuestionListComponent,
+    QuestionFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    ToasterModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true }
+    )
   ],
-  providers: [ToasterService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

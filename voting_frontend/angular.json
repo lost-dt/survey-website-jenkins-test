@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "voting_frontend": {
+    "survey-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "target/voting_frontend",
+            "outputPath": "dist/survey-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -58,18 +58,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "voting_frontend:build"
+            "browserTarget": "survey-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "voting_frontend:build:production"
+              "browserTarget": "survey-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "voting_frontend:build"
+            "browserTarget": "survey-app:build"
           }
         },
         "test": {
@@ -103,6 +103,34 @@
         }
       }
     },
+    "survey-app-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "survey-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "survey-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
   },
-  "defaultProject": "voting_frontend"
+  "defaultProject": "survey-app"
 }

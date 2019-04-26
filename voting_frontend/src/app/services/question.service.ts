@@ -1,28 +1,42 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {Question} from '../question/question.model';
-import {HttpClient} from '@angular/common/http';
-import {UserService} from './user.service';
-import {AnswerResponse} from './model/answer-response.model';
-import {Answer} from '../answer/answer.model';
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Injectable({providedIn: 'root'})
+import { Question } from '../question/question.model';
+
+
+@Injectable({ providedIn: 'root' })
 export class QuestionService {
+  constructor(private http: HttpClient) {}
 
-  question = new BehaviorSubject<Question>(new Question());
-
-  constructor(private http: HttpClient,
-              private userService: UserService) {
+  getQuestions(): Observable<Question[]> {
+    return this.http.get<Question[]>('question/all').pipe(catchError(this.handleError));
   }
 
-  public getLastQuestion(): void {
-    this.http.get<Question>('/question/last')
-      .subscribe(question => this.question.next(question));
+  createQuestion(title: string): void {
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'text/plain'
+      })
+    };
+    this.http.post('question', title, httpOptions).subscribe(res => console.log(res));
   }
 
-  public answerQuestion(question: Question, answer: Answer<any>): Observable<any> {
-    const body = AnswerResponse.create(question, answer, this.userService.getUserId());
-    return this.http.post('vote', body);
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
   }
-
 }
