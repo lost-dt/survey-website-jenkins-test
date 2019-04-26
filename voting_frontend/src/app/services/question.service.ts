@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 
 import { Question } from '../question/question.model';
-
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
@@ -15,13 +14,10 @@ export class QuestionService {
   }
 
   createQuestion(title: string): void {
-    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' })};
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'text/plain'
-      })
-    };
-    this.http.post('question', title, httpOptions).subscribe(res => console.log(res));
+    let httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    this.http.post('question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
   }
 
   private handleError(error: HttpErrorResponse) {
