@@ -1,20 +1,23 @@
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { ReplaySubject, throwError } from 'rxjs';
 
 import { Question } from '../question/question.model';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
+
+  public questions = new ReplaySubject<Question[]>();
+
   constructor(private http: HttpClient) {}
 
-  getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>('question/all').pipe(catchError(this.handleError));
+  getQuestions(): void {
+    this.http.get<Question[]>('question/all').pipe(catchError(this.handleError)).subscribe(questions => this.questions.next(questions));
   }
 
   createQuestion(title: string): void {
-    let httpHeaders = new HttpHeaders({
+    const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     this.http.post('question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
