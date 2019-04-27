@@ -1,5 +1,7 @@
-<p>{{ question.title }}</p>
-<div>
-  <input type="radio" [name]="'question' + question.id" value="Yes" required/>Yes
-  <input type="radio" [name]="'question' + question.id" value="No"/>No
-</div>
+<label [id]="'question' + question.id + '-label'">{{ question.title }}</label>
+<br>
+<mat-radio-group>
+  <mat-radio-button [value]="'question' + question.id" checked>Yes</mat-radio-button>
+  <mat-radio-button>No</mat-radio-button>
+</mat-radio-group>
+<br>

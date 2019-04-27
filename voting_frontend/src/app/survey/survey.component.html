@@ -1,8 +1,9 @@
 <header>
   <h1>Please complete the survey below</h1>
 </header>
-<form class="survey" *ngIf="questions.length" #surveyFrom="ngForm">
-  <app-question *ngFor="let q of questions" [question]="q"></app-question>
-  <button type="submit" [disabled]="surveyFrom.form.invalid">Submit your answer</button>
-</form>
-
+<div class="container">
+  <form class="survey" *ngIf="questions.length" #surveyFrom="ngForm">
+    <app-question *ngFor="let q of questions" [question]="q"></app-question>
+    <button mat-raised-button color="primary" type="submit" [disabled]="surveyFrom.form.invalid">Submit your answer</button>
+  </form>
+</div>

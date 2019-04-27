@@ -1,6 +1,11 @@
-<div>
-  <form (ngSubmit)="onSubmit(); newQuestionForm.reset();" #newQuestionForm="ngForm">
-    <input type="text" name="newTitle" [(ngModel)]="newTitle" placeholder="Input new question" required/>
-    <button type="submit" [disabled]="newQuestionForm.form.invalid">Submit new</button>
-  </form>
-</div>
+<form (ngSubmit)="onSubmit(); newQuestionForm.reset();" #newQuestionForm="ngForm">
+  <mat-form-field>
+    <input matInput name="newTitle" [(ngModel)]="newTitle" placeholder="Input new question" required/>
+    <mat-error *ngIf="newQuestionForm.form.invalid">
+      Please enter some text
+    </mat-error>
+  </mat-form-field><br>
+
+  <button mat-raised-button color="primary" type="submit"
+          [disabled]="newQuestionForm.form.invalid && !newQuestionForm.form.untouched">Submit new</button>
+</form>

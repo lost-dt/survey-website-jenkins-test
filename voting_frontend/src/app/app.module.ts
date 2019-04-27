@@ -4,6 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+// Material libs
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatRadioModule, MatInputModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { SurveyComponent } from './survey/survey.component';
@@ -44,7 +48,11 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
-    )
+    ),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
