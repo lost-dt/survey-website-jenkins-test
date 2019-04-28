@@ -1,7 +1,7 @@
 <label [id]="'question' + question.id + '-label'">{{ question.title }}</label>
 <br>
 <mat-radio-group>
-  <mat-radio-button [value]="'question' + question.id" checked>Yes</mat-radio-button>
-  <mat-radio-button>No</mat-radio-button>
+  <mat-radio-button [name]="'question' + question.id" value="true" checked>Yes</mat-radio-button>
+  <mat-radio-button [name]="'question' + question.id" value="false">No</mat-radio-button>
 </mat-radio-group>
 <br>

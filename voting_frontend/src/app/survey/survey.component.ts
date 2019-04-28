@@ -23,6 +23,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSubmit() {
+
+  }
+
   ngOnDestroy(): void {
     if (this.questionSubscription) {
       this.questionSubscription.unsubscribe();

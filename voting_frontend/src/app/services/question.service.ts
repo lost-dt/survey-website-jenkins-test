@@ -1,19 +1,21 @@
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { ReplaySubject, throwError } from 'rxjs';
+import {BehaviorSubject, throwError} from 'rxjs';
 
 import { Question } from '../question/question.model';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
 
-  public questions = new ReplaySubject<Question[]>();
+  public questions = new BehaviorSubject<Question[]>([]);
 
   constructor(private http: HttpClient) {}
 
   getQuestions(): void {
-    this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => this.questions.next(questions));
+    this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => {
+      this.questions.next(questions);
+    });
   }
 
   createQuestion(title: string): void {
@@ -21,6 +23,10 @@ export class QuestionService {
       'Content-Type': 'application/json'
     });
     this.http.post('api/question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
+  }
+
+  deleteQuestion(id: number): void {
+    this.http.delete(`api/question/${id}`).subscribe();
   }
 
   private handleError(error: HttpErrorResponse) {
