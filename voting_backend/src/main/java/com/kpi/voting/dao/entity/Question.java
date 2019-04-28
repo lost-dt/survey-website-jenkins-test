@@ -14,9 +14,10 @@ import java.util.Set;
 @Entity
 @Table(name = "question")
 @Cacheable(false)
+@TableGenerator(name="tab", initialValue=0, allocationSize=1)
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator="tab")
     private Long id;
 
     @Column(length = 255)
