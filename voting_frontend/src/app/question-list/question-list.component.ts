@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Unsubscribable } from 'rxjs';
 
-import { Question } from '../question/question.model';
+import { Question } from '../shared/question.model';
 import { QuestionService } from '../services/question.service';
 
 

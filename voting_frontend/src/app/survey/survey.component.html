@@ -2,8 +2,5 @@
   <h1>Please complete the survey below</h1>
 </header>
 <div class="container">
-  <form class="survey" *ngIf="questions.length" (ngSubmit)="onSubmit();" #surveyForm="ngForm">
-    <app-question *ngFor="let q of questions" [question]="q"></app-question>
-    <button mat-raised-button color="primary" type="submit" [disabled]="surveyForm.form.invalid">Submit your answer</button>
-  </form>
+  <app-dynamic-form [questions]="questionControls"></app-dynamic-form>
 </div>

@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit(); newQuestionForm.reset();" #newQuestionForm="ngForm">
   <mat-form-field>
     <input matInput name="newTitle" [(ngModel)]="newTitle" [errorStateMatcher]="matcher" placeholder="Input new question" required/>
-    <mat-error *ngIf="newQuestionForm.form.invalid">
+    <mat-error *ngIf="newQuestionForm.form.invalid">{{newTitle}}
       Please enter some text
     </mat-error>
   </mat-form-field><br>

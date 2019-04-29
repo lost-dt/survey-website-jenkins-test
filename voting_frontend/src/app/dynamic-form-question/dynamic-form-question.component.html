@@ -1,0 +1,7 @@
+<div [formGroup]="form">
+  <label [attr.for]="question.key">{{question.label}}</label>
+  <div [ngSwitch]="question.controlType">
+    <input *ngSwitchCase="'radio'" [formControlName]="question.key" [name]="question.key"
+           [type]="question.controlType" [value]="true" required>
+  </div>
+</div>

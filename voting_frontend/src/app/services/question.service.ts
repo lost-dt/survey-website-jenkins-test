@@ -1,14 +1,17 @@
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import {BehaviorSubject, throwError} from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 
-import { Question } from '../question/question.model';
+import { Question } from '../shared/question.model';
+import { QuestionBase } from '../question-base';
+import {RadioButtonQuestion} from '../question-radio';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
 
   public questions = new BehaviorSubject<Question[]>([]);
+
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +19,24 @@ export class QuestionService {
     this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => {
       this.questions.next(questions);
     });
+  }
+  
+  getQuestionControls(): QuestionBase<any>[] {
+    const questionControls: QuestionBase<any>[] = [];
+    let order = 1;
+    let currentQuestions = [];
+    this.questions.subscribe(questions => currentQuestions = questions);
+    console.log(currentQuestions);
+    currentQuestions.forEach(q => {
+      questionControls.push(new RadioButtonQuestion({
+        key: `question${q.id}`,
+        label: q.title,
+        required: true,
+        order: order++
+      }));
+    });
+    console.log(questionControls);
+    return questionControls;
   }
 
   createQuestion(title: string): void {

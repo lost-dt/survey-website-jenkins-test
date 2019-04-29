@@ -1,35 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Question } from '../question/question.model';
+import { Component, OnInit } from '@angular/core';
+
 import { QuestionService } from '../services/question.service';
-import { Unsubscribable } from 'rxjs';
+import {QuestionBase} from '../question-base';
+
 
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css']
 })
-export class SurveyComponent implements OnInit, OnDestroy {
-  public questions: Question[];
-  private questionSubscription: Unsubscribable;
+export class SurveyComponent implements OnInit {
+  public questionControls: QuestionBase<any>[] = [];
 
-  constructor(private questionService: QuestionService) {
-    this.questions = [];
-  }
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit() {
-    this.questionService.getQuestions();
-    this.questionSubscription = this.questionService.questions.subscribe(questions => {
-      this.questions = questions;
-    });
-  }
-
-  onSubmit() {
-
-  }
-
-  ngOnDestroy(): void {
-    if (this.questionSubscription) {
-      this.questionSubscription.unsubscribe();
-    }
+    this.questionControls = this.questionService.getQuestionControls();
   }
 }
