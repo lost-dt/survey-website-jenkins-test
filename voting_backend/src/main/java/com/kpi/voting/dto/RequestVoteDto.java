@@ -5,21 +5,10 @@ import javax.validation.constraints.NotNull;
 public class RequestVoteDto {
 
     @NotNull
-    private int id;
-
-    @NotNull
     private String answer;
 
     @NotNull
     private Long questionId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getAnswer() {
         return answer;

@@ -2,11 +2,13 @@ package com.kpi.voting.domain;
 
 import com.kpi.voting.dao.QuestionRepository;
 import com.kpi.voting.dao.entity.Question;
+import com.kpi.voting.dto.RequestQuestionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +61,24 @@ public class QuestionService {
         System.out.println("Updated statistics:");
         System.out.println(updatedQuestion);
         System.out.println("=========================");
+    }
+
+    private boolean createVote(RequestQuestionDto question) {
+        Question newQuestion = new Question();
+
+        newQuestion.setOptions(question.getOptions());
+        newQuestion.setTitle(question.getTitle());
+        newQuestion.setType(question.getType());
+
+        newQuestion = questionRepository.save(newQuestion);
+        questionRepository.flush();
+
+        return (newQuestion.getId() != null);
+    }
+
+    public void question(RequestQuestionDto question) throws Exception {
+
+        boolean isVoteCreated = createVote(question);
+        if (!isVoteCreated) throw new OperationNotSupportedException("Some troubles occurred.");
     }
 }

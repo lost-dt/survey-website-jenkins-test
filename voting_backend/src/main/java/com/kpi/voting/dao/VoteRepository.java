@@ -11,6 +11,6 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     List<Vote> findAll();
 
-    @Query("SELECT answerString FROM Vote vote where vote.question.id = ?1")
+    @Query("SELECT answer FROM Vote vote where vote.question.id = ?1")
     Collection<String> getAnswer(Long id);
 }

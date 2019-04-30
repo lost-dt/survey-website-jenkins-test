@@ -5,10 +5,11 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "vote")
+@TableGenerator(name="tab", initialValue=0, allocationSize=1)
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator="tab")
     private Long id;
 
     @NotNull
