@@ -1,7 +1,5 @@
 package com.kpi.voting.dao.entity;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -14,17 +12,11 @@ public class Vote {
     private Long id;
 
     @NotNull
-    private Boolean answer;
-
-    private String answerString;
-
+    private String answer;
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
-
-    @NotNull
-    private Long userId;
 
     public Long getId() {
         return id;
@@ -34,20 +26,12 @@ public class Vote {
         this.id = id;
     }
 
-    public Boolean getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(Boolean answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Question getQuestion() {
@@ -56,13 +40,5 @@ public class Vote {
 
     public void setQuestion(Question question) {
         this.question = question;
-    }
-
-    public String getAnswerString() {
-        return answerString;
-    }
-
-    public void setAnswerString(String answerString) {
-        this.answerString = answerString;
     }
 }

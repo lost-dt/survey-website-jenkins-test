@@ -8,12 +8,7 @@ public class RequestVoteDto {
     private int id;
 
     @NotNull
-    private boolean answer;
-
-    private String answerString;
-
-    @NotNull
-    private Long userId;
+    private String answer;
 
     @NotNull
     private Long questionId;
@@ -26,20 +21,12 @@ public class RequestVoteDto {
         this.id = id;
     }
 
-    public boolean isAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(boolean answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Long getQuestionId() {
@@ -48,13 +35,5 @@ public class RequestVoteDto {
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
-    }
-
-    public String getAnswerString() {
-        return answerString;
-    }
-
-    public void setAnswerString(String answerString) {
-        this.answerString = answerString;
     }
 }

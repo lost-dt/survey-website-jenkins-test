@@ -12,11 +12,6 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Roman.Harmash
- * @version 1.0
- * Created on 01.04.2019.
- */
 @RestController
 @RequestMapping("vote")
 public class VoteController {
@@ -24,10 +19,10 @@ public class VoteController {
     @Autowired
     private VoteService voteService;
 
-    @GetMapping(value = "string/{id}")
+    @GetMapping(value = "/{id}")
     public @ResponseBody
-    Collection<String> getAnswerStrings(@PathVariable("id") Long id){
-        return voteService.getAnswerStrings(id);
+    Collection<String> getAnswer(@PathVariable("id") Long id){
+        return voteService.getAnswer(id);
     }
 
     @GetMapping(value = "all")

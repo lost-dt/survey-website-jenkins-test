@@ -22,9 +22,6 @@ public class VoteService {
     private QuestionService questionService;
 
     public void vote(RequestVoteDto vote) throws Exception {
-        boolean voteExists = isVoteExists(vote.getUserId(), vote.getQuestionId());
-        if (voteExists) throw new OperationNotSupportedException("You have already voted.");
-
         Question question = questionService.getQuestion(vote.getQuestionId());
         if (Objects.isNull(question)) throw new OperationNotSupportedException("Question not found.");
 
@@ -34,18 +31,11 @@ public class VoteService {
         questionService.printQuestionStatistics(question.getId());
     }
 
-    private boolean isVoteExists(Long userId, Long questionId) {
-        Optional<Vote> vote = voteRepository.findByUserIdAndQuestionId(userId, questionId);
-        return vote.isPresent();
-    }
-
     private boolean createVote(RequestVoteDto vote, Question question) {
         Vote newVote = new Vote();
 
-        newVote.setUserId(vote.getUserId());
-        newVote.setAnswer(vote.isAnswer());
         newVote.setQuestion(question);
-        newVote.setAnswerString(vote.getAnswerString());
+        newVote.setAnswer(vote.getAnswer());
 
         newVote = voteRepository.save(newVote);
         voteRepository.flush();
@@ -54,8 +44,8 @@ public class VoteService {
     }
 
 
-    public Collection<String> getAnswerStrings(Long id){
-        return voteRepository.getAnswerStrings(id);
+    public Collection<String> getAnswer(Long id){
+        return voteRepository.getAnswer(id);
     }
 
     public List<Vote> getAllVotes() {
