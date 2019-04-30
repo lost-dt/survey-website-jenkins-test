@@ -16,8 +16,6 @@ import { QuestionComponent } from './question/question.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
-import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 
 const appRoutes: Routes = [
   {
@@ -44,8 +42,6 @@ const appRoutes: Routes = [
     QuestionListComponent,
     QuestionFormComponent,
     QuestionListItemComponent,
-    DynamicFormComponent,
-    DynamicFormQuestionComponent
   ],
   imports: [
     BrowserModule,

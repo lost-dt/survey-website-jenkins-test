@@ -1,7 +1,9 @@
-<label [id]="'question' + question.id + '-label'">{{ question.title }}</label>
-<br>
-<mat-radio-group [name]="'question' + question.id" [ngModel]="answer" required>
-  <mat-radio-button value="true">Yes</mat-radio-button>
-  <mat-radio-button value="false">No</mat-radio-button>
-</mat-radio-group>
-<br>
+<div [formGroup]="form">
+  <label [attr.for]="question.key">{{question.label}}</label>
+  <div [ngSwitch]="question.controlType">
+    <mat-radio-group *ngSwitchCase="'radio'" [name]="question.key" [formControlName]="question.key">
+      <mat-radio-button value="true">Yes</mat-radio-button>
+      <mat-radio-button value="false">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</div>

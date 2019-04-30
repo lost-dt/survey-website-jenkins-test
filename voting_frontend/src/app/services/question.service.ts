@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { BehaviorSubject, throwError } from 'rxjs';
 
 import { Question } from '../shared/question.model';
-import { QuestionBase } from '../question-base';
-import {RadioButtonQuestion} from '../question-radio';
+import { QuestionBase } from '../shared/question-base';
+import { RadioButtonQuestion } from '../shared/question-radio';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
@@ -51,15 +51,15 @@ export class QuestionService {
   }
 
   submitAnswers(answers: object) {
+    const randId = Math.random() * 100000; // For debugging purposes
     Object.keys(answers).forEach(questionId => {
       this.http.post('api/vote',
                      JSON.stringify({ answer: answers[questionId],
-                                      answerString: Boolean(answers[questionId]) ? 'Yes' : 'No',
+                                      answerString: answers[questionId] === 'true' ? 'Yes' : 'No',
                                       questionId: questionId.slice('question'.length),
-                                      userId: 0 }),
+                                      userId: randId }),
                      { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
     });
-
   }
 
   private handleError(error: HttpErrorResponse) {
