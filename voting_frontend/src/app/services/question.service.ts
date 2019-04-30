@@ -13,14 +13,14 @@ export class QuestionService {
   constructor(private http: HttpClient) {}
 
   getQuestions(): void {
-    this.http.get<Question[]>('question/all').pipe(catchError(this.handleError)).subscribe(questions => this.questions.next(questions));
+    this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => this.questions.next(questions));
   }
 
   createQuestion(title: string): void {
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    this.http.post('question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
+    this.http.post('api/question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
   }
 
   private handleError(error: HttpErrorResponse) {
