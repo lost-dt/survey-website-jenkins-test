@@ -11,7 +11,11 @@ import {RadioButtonQuestion} from '../question-radio';
 export class QuestionService {
 
   public questions = new BehaviorSubject<Question[]>([]);
+  public questionControls = new BehaviorSubject<QuestionBase<any>[]>([]);
 
+  private httpPostHeader =  new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -21,33 +25,41 @@ export class QuestionService {
     });
   }
   
-  getQuestionControls(): QuestionBase<any>[] {
-    const questionControls: QuestionBase<any>[] = [];
-    let order = 1;
-    let currentQuestions = [];
-    this.questions.subscribe(questions => currentQuestions = questions);
-    console.log(currentQuestions);
-    currentQuestions.forEach(q => {
-      questionControls.push(new RadioButtonQuestion({
-        key: `question${q.id}`,
-        label: q.title,
-        required: true,
-        order: order++
-      }));
+  getQuestionControls(): void {
+    this.getQuestions();
+    this.questions.subscribe(questionObjects => {
+      const newQuestionControls = [];
+      let order = 1;
+      questionObjects.forEach(q => {
+        newQuestionControls.push(new RadioButtonQuestion({
+          key: `question${q.id}`,
+          label: q.title,
+          required: true,
+          order: order++
+        }));
+      });
+      this.questionControls.next(newQuestionControls);
     });
-    console.log(questionControls);
-    return questionControls;
   }
 
   createQuestion(title: string): void {
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    this.http.post('api/question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
+    this.http.post('api/question', title, { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
   }
 
   deleteQuestion(id: number): void {
     this.http.delete(`api/question/${id}`).subscribe();
+  }
+
+  submitAnswers(answers: object) {
+    Object.keys(answers).forEach(questionId => {
+      this.http.post('api/vote',
+                     JSON.stringify({ answer: answers[questionId],
+                                      answerString: Boolean(answers[questionId]) ? 'Yes' : 'No',
+                                      questionId: questionId.slice('question'.length),
+                                      userId: 0 }),
+                     { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
+    });
+
   }
 
   private handleError(error: HttpErrorResponse) {
