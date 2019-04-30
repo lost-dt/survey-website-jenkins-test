@@ -1,5 +1,5 @@
 app-question {
-  margin: 40px;
+  margin: auto;
 }
 
 header {
@@ -12,7 +12,35 @@ header {
   color: white;
 }
 
+button {
+  margin-top: 20px;
+}
+
 .container {
+  margin-top: 15px;
   text-align: center;
-  background-color: white;
+}
+
+.question-card:nth-child(1){
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.question-card:nth-last-child(2){
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.question-card {
+  padding: 10px;
+  margin: auto;
+  width: 50%;
+  background-color: #d3d3d3;
+  border-bottom: 1px solid #7e7e7e;
+  transition: box-shadow 0.3s;
+}
+
+.question-card:hover {
+  position: relative;
+  box-shadow: 8px 9px 10px -6px rgba(0,0,0,0.75);
 }

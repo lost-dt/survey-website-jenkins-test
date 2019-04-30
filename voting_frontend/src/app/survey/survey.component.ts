@@ -1,31 +1,36 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Question } from '../question/question.model';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+import { QuestionBase } from '../shared/question-base';
 import { QuestionService } from '../services/question.service';
-import { Unsubscribable } from 'rxjs';
+import { QuestionControlService } from '../services/question-control.service';
 
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.css']
+  styleUrls: ['./survey.component.css'],
+  providers: [QuestionControlService]
 })
-export class SurveyComponent implements OnInit, OnDestroy {
-  public questions: Question[];
-  private questionSubscription: Unsubscribable;
+export class SurveyComponent implements OnInit {
+  questions: QuestionBase<any>[] = [];
+  form: FormGroup;
+  payLoad = '';
 
-  constructor(private questionService: QuestionService) {
-    this.questions = [];
-  }
+  constructor(private qcs: QuestionControlService, private qs: QuestionService) {  }
 
   ngOnInit() {
-    this.questionService.getQuestions();
-    this.questionSubscription = this.questionService.questions.subscribe(questions => {
-      this.questions = questions;
+    this.qs.getQuestionControls();
+    this.qs.questionControls.subscribe(questionControls => {
+      if (questionControls.length) {
+        this.questions = questionControls;
+        this.form = this.qcs.toFormGroup(questionControls);
+      }
     });
+
   }
 
-  ngOnDestroy(): void {
-    if (this.questionSubscription) {
-      this.questionSubscription.unsubscribe();
-    }
+  onSubmit() {
+    this.qs.submitAnswers(this.form.value);
+    this.payLoad = JSON.stringify(this.form.value);
   }
 }

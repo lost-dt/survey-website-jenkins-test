@@ -1,26 +1,65 @@
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { ReplaySubject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 
-import { Question } from '../question/question.model';
+import { Question } from '../shared/question.model';
+import { QuestionBase } from '../shared/question-base';
+import { RadioButtonQuestion } from '../shared/question-radio';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
 
-  public questions = new ReplaySubject<Question[]>();
+  public questions = new BehaviorSubject<Question[]>([]);
+  public questionControls = new BehaviorSubject<QuestionBase<any>[]>([]);
+
+  private httpPostHeader =  new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
   constructor(private http: HttpClient) {}
 
   getQuestions(): void {
-    this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => this.questions.next(questions));
+    this.http.get<Question[]>('api/question/all').pipe(catchError(this.handleError)).subscribe(questions => {
+      this.questions.next(questions);
+    });
+  }
+  
+  getQuestionControls(): void {
+    this.getQuestions();
+    this.questions.subscribe(questionObjects => {
+      const newQuestionControls = [];
+      let order = 1;
+      questionObjects.forEach(q => {
+        newQuestionControls.push(new RadioButtonQuestion({
+          key: `question${q.id}`,
+          label: q.title,
+          required: true,
+          order: order++
+        }));
+      });
+      this.questionControls.next(newQuestionControls);
+    });
   }
 
   createQuestion(title: string): void {
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json'
+    this.http.post('api/question', title, { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
+  }
+
+  deleteQuestion(id: number): void {
+    this.http.delete(`api/question/${id}`).subscribe();
+  }
+
+  submitAnswers(answers: object) {
+    const randId = Math.random() * 100000; // For debugging purposes
+    Object.keys(answers).forEach(questionId => {
+      this.http.post('api/vote',
+                     JSON.stringify({ answer: answers[questionId],
+                                      answerString: answers[questionId] === 'true' ? 'Yes' : 'No',
+                                      questionId: questionId.slice('question'.length),
+                                      userId: randId }),
+                     { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
     });
-    this.http.post('api/question', title, { headers: httpHeaders, responseType: 'text' }).subscribe(res => console.log(res));
   }
 
   private handleError(error: HttpErrorResponse) {

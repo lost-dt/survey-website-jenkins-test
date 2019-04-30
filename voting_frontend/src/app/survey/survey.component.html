@@ -2,8 +2,18 @@
   <h1>Please complete the survey below</h1>
 </header>
 <div class="container">
-  <form class="survey" *ngIf="questions.length" #surveyFrom="ngForm">
-    <app-question *ngFor="let q of questions" [question]="q"></app-question>
-    <button mat-raised-button color="primary" type="submit" [disabled]="surveyFrom.form.invalid">Submit your answer</button>
+  <form (ngSubmit)="onSubmit()" *ngIf="form" [formGroup]="form">
+
+    <div *ngFor="let question of questions" class="form-row question-card">
+      <app-question [question]="question" [form]="form"></app-question>
+    </div>
+
+    <div class="form-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit your answer</button>
+    </div>
   </form>
+
+  <div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br>{{payLoad}}
+  </div>
 </div>
