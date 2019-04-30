@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Material libs
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatRadioModule, MatInputModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -15,7 +15,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { QuestionComponent } from './question/question.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
-import { QuestionListItemComponent } from './question-list-item/question-list-item.component';
 
 const appRoutes: Routes = [
   {
@@ -41,7 +40,6 @@ const appRoutes: Routes = [
     QuestionComponent,
     QuestionListComponent,
     QuestionFormComponent,
-    QuestionListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +54,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatRadioModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

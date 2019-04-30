@@ -1,14 +1,6 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 import { QuestionService } from '../services/question.service';
-import {ErrorStateMatcher} from '@angular/material';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-
-export class NewQuestionErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    return form && form.touched;
-  }
-}
 
 @Component({
   selector: 'app-question-form',
@@ -16,13 +8,17 @@ export class NewQuestionErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent {
-  newTitle: string;
-
-  matcher = new NewQuestionErrorStateMatcher(); // For custom form error handling
+  inputTypes = ['text', 'radio', 'checkbox'];
+  type = 'text';
+  title: string;
+  options = '';
 
   constructor(private questionService: QuestionService) { }
 
   onSubmit() {
-    this.questionService.createQuestion(this.newTitle);
+    if (this.type === 'text') {
+      this.options = '';
+    }
+    this.questionService.createQuestion(this.title, this.type, this.options);
   }
 }

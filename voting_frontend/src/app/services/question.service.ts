@@ -6,6 +6,8 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { Question } from '../shared/question.model';
 import { QuestionBase } from '../shared/question-base';
 import { RadioButtonQuestion } from '../shared/question-radio';
+import { CheckBoxQuestion } from '../shared/question-checkbox';
+import { TextQuestion } from '../shared/question-text';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
@@ -29,21 +31,40 @@ export class QuestionService {
     this.getQuestions();
     this.questions.subscribe(questionObjects => {
       const newQuestionControls = [];
-      let order = 1;
       questionObjects.forEach(q => {
-        newQuestionControls.push(new RadioButtonQuestion({
-          key: `question${q.id}`,
-          label: q.title,
-          required: true,
-          order: order++
-        }));
+        switch (q.type) {
+          case 'radio':
+            newQuestionControls.push(new RadioButtonQuestion({
+              key: `question${q.id}`,
+              label: q.title,
+              options: q.options.split(', '),
+              required: true
+            }));
+            break;
+          case 'checkbox':
+            newQuestionControls.push(new CheckBoxQuestion({
+              key: `question${q.id}`,
+              label: q.title,
+              options: q.options.split(', '),
+              required: true
+            }));
+            break;
+          case 'text':
+            newQuestionControls.push(new TextQuestion({
+              key: `question${q.id}`,
+              label: q.title,
+              required: true
+            }));
+        }
       });
       this.questionControls.next(newQuestionControls);
     });
   }
 
-  createQuestion(title: string): void {
-    this.http.post('api/question', title, { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
+  createQuestion(title: string, type: string, options: string): void {
+    this.http.post('api/question',
+                   JSON.stringify({ title, type, options }),
+                   { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
   }
 
   deleteQuestion(id: number): void {

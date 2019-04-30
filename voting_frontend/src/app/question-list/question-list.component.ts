@@ -11,7 +11,8 @@ import { QuestionService } from '../services/question.service';
   styleUrls: ['./question-list.component.css']
 })
 export class QuestionListComponent implements OnInit, OnDestroy {
-  questions: Question[];
+  public questions: Question[];
+  public columnsToDisplay = ['id', 'title', 'type', 'options', 'delete'];
   private intervalSubscription: Unsubscribable;
 
   constructor(private questionService: QuestionService) { }
@@ -20,6 +21,10 @@ export class QuestionListComponent implements OnInit, OnDestroy {
     this.questionService.getQuestions();
     this.intervalSubscription = interval(1000).subscribe(() => this.questionService.getQuestions());
     this.questionService.questions.subscribe(questions => this.questions = questions);
+  }
+
+  delete(questionId: number) {
+    this.questionService.deleteQuestion(questionId);
   }
 
   ngOnDestroy(): void {

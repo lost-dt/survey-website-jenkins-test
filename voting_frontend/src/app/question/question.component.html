@@ -2,8 +2,13 @@
   <label [attr.for]="question.key">{{question.label}}</label>
   <div [ngSwitch]="question.controlType">
     <mat-radio-group *ngSwitchCase="'radio'" [name]="question.key" [formControlName]="question.key">
-      <mat-radio-button value="true">Yes</mat-radio-button>
-      <mat-radio-button value="false">No</mat-radio-button>
+      <mat-radio-button *ngFor="let option of question.options" [value]="option">{{ option }}</mat-radio-button>
     </mat-radio-group>
+    <mat-form-field *ngSwitchCase="'text'" >
+      <input matInput [formControlName]="question.key" name="question.key" placeholder="Enter your answer here..."/>
+      <mat-error *ngIf="form.invalid">
+        Please enter some text
+      </mat-error>
+    </mat-form-field>
   </div>
 </div>
