@@ -26,11 +26,10 @@ export class SurveyComponent implements OnInit {
         this.form = this.qcs.toFormGroup(questionControls);
       }
     });
-
   }
 
   onSubmit() {
     this.qs.submitAnswers(this.form.value);
-    this.payLoad = JSON.stringify(this.form.value);
+    this.payLoad = JSON.stringify(this.form.value); // For debugging purposes
   }
 }

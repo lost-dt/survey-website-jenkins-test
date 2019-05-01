@@ -15,3 +15,11 @@ mat-radio-group {
 mat-radio-button {
   margin-left: 10px;
 }
+
+mat-form-field {
+  width: 100%;
+}
+
+.answer-container {
+  padding: 0 10px;
+}

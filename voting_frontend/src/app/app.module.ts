@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Material libs
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule } from '@angular/material';
+import { MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule, MatCheckboxModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -56,7 +56,8 @@ const appRoutes: Routes = [
     MatInputModule,
     MatIconModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import { BehaviorSubject, throwError } from 'rxjs';
 import { Question } from '../shared/question.model';
 import { QuestionBase } from '../shared/question-base';
 import { RadioButtonQuestion } from '../shared/question-radio';
-import { CheckBoxQuestion } from '../shared/question-checkbox';
+import { SelectQuestion } from '../shared/question-select';
 import { TextQuestion } from '../shared/question-text';
 
 @Injectable({ providedIn: 'root' })
@@ -41,8 +41,8 @@ export class QuestionService {
               required: true
             }));
             break;
-          case 'checkbox':
-            newQuestionControls.push(new CheckBoxQuestion({
+          case 'select':
+            newQuestionControls.push(new SelectQuestion({
               key: `question${q.id}`,
               label: q.title,
               options: q.options.split(', '),
@@ -75,8 +75,7 @@ export class QuestionService {
     const randId = Math.random() * 100000; // For debugging purposes
     Object.keys(answers).forEach(questionId => {
       this.http.post('api/vote',
-                     JSON.stringify({ answer: answers[questionId],
-                                      answerString: answers[questionId] === 'true' ? 'Yes' : 'No',
+                     JSON.stringify({ answer: Array.isArray(answers[questionId]) ? answers[questionId].join(', ') : answers[questionId],
                                       questionId: questionId.slice('question'.length),
                                       userId: randId }),
                      { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));

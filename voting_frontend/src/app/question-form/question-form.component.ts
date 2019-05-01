@@ -8,7 +8,7 @@ import { QuestionService } from '../services/question.service';
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent {
-  inputTypes = ['text', 'radio', 'checkbox'];
+  inputTypes = ['text', 'radio', 'select'];
   type = 'text';
   title: string;
   options = '';

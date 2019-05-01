@@ -17,5 +17,8 @@ a {
 
 table {
   margin: auto;
-  width: 40%;
+}
+
+table td {
+  padding-right: 15px;
 }
