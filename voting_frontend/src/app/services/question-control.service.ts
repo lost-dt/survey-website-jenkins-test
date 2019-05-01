@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { QuestionBase } from '../shared/question-base';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QuestionControlService {
   constructor() { }
 

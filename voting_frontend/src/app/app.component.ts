@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'survey-app';
 
+  userAdmin = false;
+
   constructor() {}
 
 }

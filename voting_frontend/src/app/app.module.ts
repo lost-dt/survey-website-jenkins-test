@@ -6,9 +6,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Material libs
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule, MatCheckboxModule } from '@angular/material';
+import {
+  MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule,
+  MatCheckboxModule, MatCardModule, MatDividerModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { SurveyComponent } from './survey/survey.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -20,6 +23,10 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminDashboardComponent
+  },
+  {
+    path: 'login',
+    component: AdminLoginComponent
   },
   {
     path: '',
@@ -34,6 +41,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    AdminLoginComponent,
     AdminDashboardComponent,
     PageNotFoundComponent,
     SurveyComponent,
@@ -57,7 +65,9 @@ const appRoutes: Routes = [
     MatIconModule,
     MatSelectModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
