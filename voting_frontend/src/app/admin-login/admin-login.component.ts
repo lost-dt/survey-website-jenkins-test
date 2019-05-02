@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators/';
 
-import { Admin } from '../shared/admin.model';
-import { AdminUserService } from '../services/admin-user.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -11,20 +12,24 @@ import { AdminUserService } from '../services/admin-user.service';
 export class AdminLoginComponent implements OnInit {
   private username = '';
   private password = '';
-  private admins: Admin[] = [];
+  public error = '';
 
-  constructor(private adminService: AdminUserService) { }
+  constructor(private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    this.adminService.getAdminsByUsername(this.username).subscribe(adminData => {
-      this.admins = adminData;
-      if (!this.admins) {
-
+    this.authService.login(this.username, this.password).pipe(first()).subscribe(adminData => {
+        if (adminData instanceof Error) {
+          console.log(adminData);
+          this.error = adminData.message;
+        } else {
+          this.router.navigate(['admin']);
+          this.error = '';
+        }
       }
-    });
+    );
   }
 
 }

@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit(); newQuestionForm.reset();" #newQuestionForm="ngForm">
+<form (ngSubmit)="onSubmit(); newQuestionForm.resetForm();" #newQuestionForm="ngForm">
   <mat-form-field>
     <mat-label>Input type</mat-label>
     <mat-select [(value)]="type" required>

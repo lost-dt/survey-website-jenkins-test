@@ -3,7 +3,7 @@ app-question {
 }
 
 header {
-  width: 50%;
+  width: 500px;
   margin: auto;
   padding: 15px;
   border-radius: 20px;
@@ -13,7 +13,7 @@ header {
 }
 
 button {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .container {
@@ -24,7 +24,7 @@ button {
 .question-card {
   padding: 10px;
   margin: auto;
-  width: 50%;
+  width: 500px;
   background-color: #d3d3d3;
   border-bottom: 1px solid #7e7e7e;
   transition: box-shadow 0.3s;

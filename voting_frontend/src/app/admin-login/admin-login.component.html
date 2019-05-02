@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <form #loginForm="ngForm">
+      <form (ngSubmit)="onSubmit(); loginForm.resetForm()" #loginForm="ngForm">
         <div class="row">
           <mat-form-field>
             <mat-label>Username</mat-label>
@@ -16,10 +16,11 @@
             <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="password" required>
           </mat-form-field>
         </div>
+        <div class="form-footer">
+          <button mat-raised-button type="submit" color="primary" [disabled]="loginForm.form.invalid">Login</button>
+        </div>
       </form>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loginForm.form.invalid">Login</button>
-      </mat-card-actions>
+      <div *ngIf="error" class="error">{{ error }}</div>
     </mat-card-content>
   </mat-card>
 </div>

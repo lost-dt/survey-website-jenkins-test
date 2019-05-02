@@ -1,9 +1,13 @@
-<h1>Survey dashboard</h1>
-<div class="questionList">
+<header>
+  <h1>Survey dashboard</h1>
+  <button mat-raised-button color="basic" (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</button>
+</header>
+<div class="question-list">
   <h3>All added questions:</h3>
   <app-question-list></app-question-list>
 </div>
-<div class="addQuestions">
+<mat-divider></mat-divider>
+<div class="add-questions">
   <h3>Add new questions:</h3>
   <app-question-form></app-question-form>
 </div>

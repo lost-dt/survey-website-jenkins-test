@@ -10,6 +10,8 @@ import {
   MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule,
   MatCheckboxModule, MatCardModule, MatDividerModule } from '@angular/material';
 
+import { AuthGuard } from './guards/auth.guard';
+
 import { AppComponent } from './app.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -22,7 +24,8 @@ import { QuestionFormComponent } from './question-form/question-form.component';
 const appRoutes: Routes = [
   {
     path: 'admin',
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',

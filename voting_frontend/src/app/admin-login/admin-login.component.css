@@ -2,6 +2,10 @@ mat-card {
   display: inline-block;
 }
 
+.form-footer {
+  text-align: center;
+}
+
 .form-container {
    height: 100%;
    display: flex;
@@ -15,6 +19,6 @@ mat-card {
   justify-content: space-evenly;
 }
 
-mat-card-actions {
-  text-align: center;
+.error {
+  color: red;
 }
