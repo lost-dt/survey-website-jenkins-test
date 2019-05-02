@@ -52,7 +52,7 @@ public class QuestionController {
     }
 
 
-    @PostMapping()
+    @PostMapping(produces = "application/json")
     public ResponseEntity<?> answer(@Valid @RequestBody RequestQuestionDto question) {
         try {
             questionService.question(question);

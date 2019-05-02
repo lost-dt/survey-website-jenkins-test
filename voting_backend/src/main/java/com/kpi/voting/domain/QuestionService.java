@@ -47,14 +47,6 @@ public class QuestionService {
     }
 
 
-    public Long createQuestion(String title) {
-        Question question = new Question();
-        question.setTitle(title);
-        question = questionRepository.save(question);
-        questionRepository.flush();
-        return question.getId();
-    }
-
     public void printQuestionStatistics(Long id) {
         Question updatedQuestion = this.getQuestion(id);
 
@@ -63,7 +55,7 @@ public class QuestionService {
         System.out.println("=========================");
     }
 
-    private boolean createVote(RequestQuestionDto question) {
+    private boolean createQuestion(RequestQuestionDto question) {
         Question newQuestion = new Question();
 
         newQuestion.setOptions(question.getOptions());
@@ -78,7 +70,7 @@ public class QuestionService {
 
     public void question(RequestQuestionDto question) throws Exception {
 
-        boolean isVoteCreated = createVote(question);
-        if (!isVoteCreated) throw new OperationNotSupportedException("Some troubles occurred.");
+        boolean isQuestionCreated = createQuestion(question);
+        if (!isQuestionCreated) throw new OperationNotSupportedException("Some troubles occurred.");
     }
 }
