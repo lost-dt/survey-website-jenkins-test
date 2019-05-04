@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("vote")
@@ -29,6 +31,12 @@ public class VoteController {
     public @ResponseBody
     List<Vote> getAllVotes(){
         return voteService.getAllVotes();
+    }
+
+    @GetMapping(value = "stats_{id}")
+    public @ResponseBody
+    Map<String, Integer> getStats(@PathVariable("id") Long id){
+        return voteService.getStats(id);
     }
 
 

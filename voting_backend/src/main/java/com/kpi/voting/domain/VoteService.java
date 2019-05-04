@@ -7,11 +7,9 @@ import com.kpi.voting.dao.entity.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.element.Element;
 import javax.naming.OperationNotSupportedException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class VoteService {
@@ -50,5 +48,27 @@ public class VoteService {
 
     public List<Vote> getAllVotes() {
         return voteRepository.findAll();
+    }
+
+    public String getOptions(Long id){
+        Question question = questionService.getQuestion(id);
+        return question.getOptions();
+    }
+
+    public Map<String, Integer> getStats(Long id){
+        HashMap<String, Integer> stats = new HashMap<String, Integer>();
+        Collection<String> answers = getAnswer(id);
+        String options = getOptions(id);
+        String[] optionsList = options.split(", ");
+        for (int i = 0; i < optionsList.length; i++) {
+            int counter = 0;
+            for (String answer: answers){
+                if(Arrays.asList(answer.split(", ")).contains(optionsList[i])){
+                    counter++;
+                }
+            }
+            stats.put(optionsList[i], counter);
+        }
+        return stats;
     }
 }
