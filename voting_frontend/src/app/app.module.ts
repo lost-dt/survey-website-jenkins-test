@@ -15,8 +15,9 @@ import { AuthGuard } from './guards/auth.guard';
 import { AppComponent } from './app.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { SurveyComponent } from './survey/survey.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
@@ -30,6 +31,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: AdminLoginComponent
+  },
+  {
+    path: 'stats',
+    component: StatisticsComponent
   },
   {
     path: '',
@@ -47,6 +52,7 @@ const appRoutes: Routes = [
     AdminLoginComponent,
     AdminDashboardComponent,
     PageNotFoundComponent,
+    StatisticsComponent,
     SurveyComponent,
     QuestionComponent,
     QuestionListComponent,
