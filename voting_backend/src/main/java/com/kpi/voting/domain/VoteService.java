@@ -55,8 +55,49 @@ public class VoteService {
         return question.getOptions();
     }
 
-    public Map<String, Integer> getStats(Long id){
+    public class StatsInfo{
+        private String title;
+        private String type;
+        private Map<String, Integer> stats;
+
+        public StatsInfo(String title, String type, Map<String, Integer> stats) {
+            this.title = title;
+            this.type = type;
+            this.stats = stats;
+        }
+
+        public StatsInfo() {
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public Map<String, Integer> getStats() {
+            return stats;
+        }
+
+        public void setStats(Map<String, Integer> stats) {
+            this.stats = stats;
+        }
+    }
+
+    public StatsInfo getStats(Long id){
+        StatsInfo statsInfo = new StatsInfo();
         HashMap<String, Integer> stats = new HashMap<String, Integer>();
+        Question question = questionService.getQuestion(id);
         Collection<String> answers = getAnswer(id);
         String options = getOptions(id);
         String[] optionsList = options.split(", ");
@@ -69,6 +110,20 @@ public class VoteService {
             }
             stats.put(optionsList[i], counter);
         }
-        return stats;
+        statsInfo.setStats(stats);
+        statsInfo.setTitle(question.getTitle());
+        statsInfo.setType(question.getType());
+        return statsInfo;
+    }
+
+    public HashMap<Long, StatsInfo> getAllStats(){
+        HashMap<Long, StatsInfo> allStats = new HashMap<Long, StatsInfo>();
+        List<Question> questions = questionService.getAllQuestions();
+        for (Question question: questions){
+            if(!question.getType().equals("text")) {
+                allStats.put(question.getId(), getStats(question.getId()));
+            }
+        }
+        return allStats;
     }
 }
