@@ -35,8 +35,14 @@ public class VoteController {
 
     @GetMapping(value = "stats_{id}")
     public @ResponseBody
-    Map<String, Integer> getStats(@PathVariable("id") Long id){
+    VoteService.StatsInfo getStats(@PathVariable("id") Long id){
         return voteService.getStats(id);
+    }
+
+    @GetMapping(value = "stats_all")
+    public @ResponseBody
+    HashMap<Long, VoteService.StatsInfo> getAllStats(){
+        return voteService.getAllStats();
     }
 
 
