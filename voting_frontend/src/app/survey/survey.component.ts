@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { QuestionBase } from '../shared/question-base';
 import { QuestionService } from '../services/question.service';
@@ -16,7 +17,7 @@ export class SurveyComponent implements OnInit {
   form: FormGroup;
   payLoad = '';
 
-  constructor(private qcs: QuestionControlService, private qs: QuestionService) {  }
+  constructor(private qcs: QuestionControlService, private qs: QuestionService, private router: Router) {  }
 
   ngOnInit() {
     this.qs.getQuestionControls();
@@ -27,9 +28,10 @@ export class SurveyComponent implements OnInit {
       }
     });
   }
-
+  
   onSubmit() {
     this.qs.submitAnswers(this.form.value);
     this.payLoad = JSON.stringify(this.form.value); // For debugging purposes
+    this.router.navigate(['stats']);
   }
 }

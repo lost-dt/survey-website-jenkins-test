@@ -1,1 +1,4 @@
-<div id="container" style="width:100%; height:400px;"></div>
+<div *ngIf="answerStats.length">
+  <app-plot *ngFor="let singleAnswerData of answerStats" [plotData]="singleAnswerData"
+            [containerId]="singleAnswerData.id"></app-plot>
+</div>
