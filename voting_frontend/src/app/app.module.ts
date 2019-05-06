@@ -13,7 +13,7 @@ import {
 
 import { AuthGuard } from './guards/auth.guard';
 import { LoginRedirectGuard } from './guards/login-redirect.guard';
-import { SurveyRedirectGuard } from "./guards/survey-redirect.guard";
+import { SurveyRedirectGuard } from './guards/survey-redirect.guard';
 
 import { AppComponent } from './app.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';

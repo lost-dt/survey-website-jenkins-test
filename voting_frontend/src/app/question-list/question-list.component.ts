@@ -19,12 +19,11 @@ export class QuestionListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.questionService.getQuestions();
-    this.intervalSubscription = interval(1000).subscribe(() => this.questionService.getQuestions());
     this.questionService.questions.subscribe(questions => this.questions = questions);
   }
 
   delete(questionId: number) {
-    this.questionService.deleteQuestion(questionId);
+    this.questionService.deleteQuestion(questionId).subscribe(() => this.questionService.getQuestions());
   }
 
   ngOnDestroy(): void {

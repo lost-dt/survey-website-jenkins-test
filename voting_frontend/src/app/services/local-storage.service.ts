@@ -27,8 +27,8 @@ export class LocalStorageService {
     }
   }
 
-  public static clear() {
-    localStorage.clear();
+  public static clearUser() {
+    localStorage.removeItem(this.userId);
   }
 
 }

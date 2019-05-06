@@ -20,7 +20,7 @@ export class QuestionFormComponent {
     if (this.type === 'text') {
       this.options = '';
     }
-    this.questionService.createQuestion(this.title, this.type, this.options);
-    LocalStorageService.clear();
+    this.questionService.createQuestion(this.title, this.type, this.options).subscribe(() => this.questionService.getQuestions());
+    LocalStorageService.clearUser();
   }
 }

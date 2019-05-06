@@ -1,7 +1,7 @@
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, throwError } from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 
 import { Question } from '../shared/question.model';
 import { QuestionBase } from '../shared/question-base';
@@ -61,14 +61,14 @@ export class QuestionService {
     });
   }
 
-  createQuestion(title: string, type: string, options: string): void {
-    this.http.post('api/question',
+  createQuestion(title: string, type: string, options: string): Observable<any> {
+    return this.http.post('api/question',
                    JSON.stringify({ title, type, options }),
-                   { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
+                   { headers: this.httpPostHeader, responseType: 'text' });
   }
 
-  deleteQuestion(id: number): void {
-    this.http.delete(`api/question/${id}`).subscribe();
+  deleteQuestion(id: number): Observable<any> {
+    return this.http.delete(`api/question/${id}`);
   }
 
   submitAnswers(answers: object) {
