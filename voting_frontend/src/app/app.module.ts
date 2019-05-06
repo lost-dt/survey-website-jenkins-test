@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule,
-  MatCheckboxModule, MatCardModule, MatDividerModule } from '@angular/material';
+  MatCheckboxModule, MatCardModule, MatDividerModule, MatSnackBarModule } from '@angular/material';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -80,7 +80,8 @@ const appRoutes: Routes = [
     MatTableModule,
     MatCheckboxModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

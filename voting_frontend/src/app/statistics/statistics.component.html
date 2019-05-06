@@ -1,3 +1,6 @@
+<header>
+  <h1>Survey statistics | <a (click)="navigateToMain()">Survey page</a></h1>
+</header>
 <div *ngIf="answerStats.length">
   <app-plot *ngFor="let singleAnswerData of answerStats" [plotData]="singleAnswerData"
             [containerId]="singleAnswerData.id"></app-plot>

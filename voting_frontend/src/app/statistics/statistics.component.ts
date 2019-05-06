@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { StatisticsService } from '../services/statistics.service';
 import { StatData } from '../shared/stat-data.model';
@@ -11,8 +12,12 @@ import { StatData } from '../shared/stat-data.model';
 export class StatisticsComponent implements OnInit {
   public answerStats: StatData[] = [];
 
-  constructor(private statService: StatisticsService) { }
+  constructor(private statService: StatisticsService, private router: Router) { }
 
+  navigateToMain() {
+    this.router.navigate(['']);
+  }
+  
   ngOnInit() {
     this.statService.getStats();
     this.statService.statData.subscribe(stats => {

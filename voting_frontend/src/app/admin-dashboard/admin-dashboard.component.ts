@@ -15,4 +15,8 @@ export class AdminDashboardComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  navigateToMain() {
+    this.router.navigate(['']);
+  }
 }

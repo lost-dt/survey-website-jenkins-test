@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { QuestionBase } from '../shared/question-base';
@@ -15,9 +16,12 @@ import { QuestionControlService } from '../services/question-control.service';
 export class SurveyComponent implements OnInit {
   questions: QuestionBase<any>[] = [];
   form: FormGroup;
-  payLoad = '';
+  isSubmitted = false;
 
-  constructor(private qcs: QuestionControlService, private qs: QuestionService, private router: Router) {  }
+  constructor(private qcs: QuestionControlService,
+              private qs: QuestionService,
+              private router: Router,
+              private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.qs.getQuestionControls();
@@ -28,10 +32,15 @@ export class SurveyComponent implements OnInit {
       }
     });
   }
-  
-  onSubmit() {
-    this.qs.submitAnswers(this.form.value);
-    this.payLoad = JSON.stringify(this.form.value); // For debugging purposes
+
+  navigateToStats() {
     this.router.navigate(['stats']);
+  }
+
+  onSubmit() {
+    this.isSubmitted = true;
+    this.qs.submitAnswers(this.form.value);
+    this.snackBar.open('Thanks for participation!', 'Got it!', { duration: 7000 });
+    this.navigateToStats();
   }
 }

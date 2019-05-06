@@ -1,5 +1,5 @@
 <header>
-  <h1>Please complete the survey below</h1>
+  <h1>Survey | <a (click)="navigateToStats()">Survey statistics</a></h1>
 </header>
 <div class="container">
   <form (ngSubmit)="onSubmit()" *ngIf="form" [formGroup]="form">
@@ -9,11 +9,8 @@
     </div>
 
     <div class="form-row">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit your answer</button>
+      <button mat-raised-button color="primary" type="submit"
+              (click)="buttonOnClick()" [disabled]="!form.valid || isSubmitted">Submit your answer</button>
     </div>
   </form>
-
-  <div *ngIf="payLoad" class="form-row">
-    <strong>Saved the following values</strong><br>{{payLoad}}
-  </div>
 </div>

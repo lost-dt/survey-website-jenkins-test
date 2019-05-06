@@ -35,10 +35,11 @@ export class PlotComponent implements OnInit {
           categories: ['']
         };
         this.plotOptions.yAxis = {
-            min: 0,
-            title: {
-              text: 'Number of votes'
-            }
+          min: 0,
+          title: {
+            text: 'Number of votes'
+          },
+          allowDecimals: false
         };
         Object.keys(this.plotData.stats).forEach(key => {
           this.plotOptions.series.push({ name: key,
