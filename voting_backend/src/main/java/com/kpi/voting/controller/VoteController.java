@@ -41,7 +41,7 @@ public class VoteController {
 
     @GetMapping(value = "stats_all")
     public @ResponseBody
-    HashMap<Long, VoteService.StatsInfo> getAllStats(){
+    List<VoteService.StatsInfo> getAllStats(){
         return voteService.getAllStats();
     }
 

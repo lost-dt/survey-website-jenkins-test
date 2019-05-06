@@ -58,6 +58,7 @@ public class VoteService {
     public class StatsInfo{
         private String title;
         private String type;
+        private Long id;
         private Map<String, Integer> stats;
 
         public StatsInfo(String title, String type, Map<String, Integer> stats) {
@@ -92,6 +93,14 @@ public class VoteService {
         public void setStats(Map<String, Integer> stats) {
             this.stats = stats;
         }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
     }
 
     public StatsInfo getStats(Long id){
@@ -113,15 +122,16 @@ public class VoteService {
         statsInfo.setStats(stats);
         statsInfo.setTitle(question.getTitle());
         statsInfo.setType(question.getType());
+        statsInfo.setId(id);
         return statsInfo;
     }
 
-    public HashMap<Long, StatsInfo> getAllStats(){
-        HashMap<Long, StatsInfo> allStats = new HashMap<Long, StatsInfo>();
+    public List<StatsInfo> getAllStats(){
+        List<StatsInfo> allStats = new ArrayList<>();
         List<Question> questions = questionService.getAllQuestions();
         for (Question question: questions){
             if(!question.getType().equals("text")) {
-                allStats.put(question.getId(), getStats(question.getId()));
+                allStats.add(getStats(question.getId()));
             }
         }
         return allStats;

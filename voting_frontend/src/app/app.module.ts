@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HighchartsChartModule } from 'highcharts-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,6 +22,7 @@ import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
+import { PlotComponent } from './plot/plot.component';
 
 const appRoutes: Routes = [
   {
@@ -57,10 +59,12 @@ const appRoutes: Routes = [
     QuestionComponent,
     QuestionListComponent,
     QuestionFormComponent,
+    PlotComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    HighchartsChartModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(
