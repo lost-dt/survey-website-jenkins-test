@@ -7,10 +7,11 @@ mat-card {
 }
 
 .form-container {
-   height: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  height: 100%;
+  display: flex;
+  margin-top: -16px;
+  justify-content: center;
+  align-items: center;
 }
 
 .row {

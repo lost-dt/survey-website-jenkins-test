@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { QuestionBase } from '../shared/question-base';
 import { QuestionService } from '../services/question.service';
 import { QuestionControlService } from '../services/question-control.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-survey',
@@ -20,6 +21,7 @@ export class SurveyComponent implements OnInit {
 
   constructor(private qcs: QuestionControlService,
               private qs: QuestionService,
+              private userService: UserService,
               private router: Router,
               private snackBar: MatSnackBar) {}
 
@@ -33,14 +35,15 @@ export class SurveyComponent implements OnInit {
     });
   }
 
-  navigateToStats() {
-    this.router.navigate(['stats']);
+  navigateToStats(params) {
+    this.router.navigate(['stats'], params);
   }
 
   onSubmit() {
     this.isSubmitted = true;
+    this.userService.initUser();
     this.qs.submitAnswers(this.form.value);
     this.snackBar.open('Thanks for participation!', 'Got it!', { duration: 7000 });
-    this.navigateToStats();
+    this.navigateToStats({ queryParams: { disable: true } });
   }
 }

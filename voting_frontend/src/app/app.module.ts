@@ -12,6 +12,8 @@ import {
   MatCheckboxModule, MatCardModule, MatDividerModule, MatSnackBarModule } from '@angular/material';
 
 import { AuthGuard } from './guards/auth.guard';
+import { LoginRedirectGuard } from './guards/login-redirect.guard';
+import { SurveyRedirectGuard } from "./guards/survey-redirect.guard";
 
 import { AppComponent } from './app.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
   },
   {
     path: 'login',
-    component: AdminLoginComponent
+    component: AdminLoginComponent,
+    canActivate: [LoginRedirectGuard]
   },
   {
     path: 'stats',
@@ -40,7 +43,8 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: SurveyComponent
+    component: SurveyComponent,
+    canActivate: [SurveyRedirectGuard]
   },
   {
     path: '**',

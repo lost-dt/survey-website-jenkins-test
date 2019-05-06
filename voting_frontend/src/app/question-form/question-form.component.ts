@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { QuestionService } from '../services/question.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-question-form',
@@ -13,12 +14,13 @@ export class QuestionFormComponent {
   title: string;
   options = '';
 
-  constructor(private questionService: QuestionService) { }
+  constructor(private questionService: QuestionService) {}
 
   onSubmit() {
     if (this.type === 'text') {
       this.options = '';
     }
     this.questionService.createQuestion(this.title, this.type, this.options);
+    LocalStorageService.clear();
   }
 }

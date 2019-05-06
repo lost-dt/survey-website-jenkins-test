@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators/';
 
@@ -9,15 +9,12 @@ import { AuthenticationService } from '../services/authentication.service';
   templateUrl: './admin-login.component.html',
   styleUrls: ['./admin-login.component.css']
 })
-export class AdminLoginComponent implements OnInit {
+export class AdminLoginComponent {
   private username = '';
   private password = '';
   public error = '';
 
   constructor(private router: Router, private authService: AuthenticationService) { }
-
-  ngOnInit() {
-  }
 
   onSubmit() {
     this.authService.login(this.username, this.password).pipe(first()).subscribe(adminData => {

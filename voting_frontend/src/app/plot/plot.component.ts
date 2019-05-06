@@ -82,7 +82,6 @@ export class PlotComponent implements OnInit {
             }
             pieSeries.data.push(dataInfo);
         });
-        console.log(pieSeries);
         this.plotOptions.series.push(pieSeries);
         break;
     }
