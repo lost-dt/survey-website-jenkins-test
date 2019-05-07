@@ -17,17 +17,17 @@ export class FormService {
   constructor(private http: HttpClient) {}
 
   getAllForms(): void {
-    this.http.get<Form[]>('api/formGroup/all').pipe(catchError(this.handleError)).subscribe(forms => {
+    this.http.get<Form[]>('api/form/data_all').pipe(catchError(this.handleError)).subscribe(forms => {
       this.forms.next(forms);
     });
   }
 
-  getFromById(formId: string): Observable<Form> {
-    return this.http.get<Form>('api/formGroup/all').pipe(catchError(this.handleError));
+  getFromByHash(formHash: string): Observable<Form> {
+    return this.http.get<Form>(`api/form/data_${formHash}`).pipe(catchError(this.handleError));
   }
 
   createForm(title: string): Observable<any> {
-    return this.http.post('api/question',
+    return this.http.post('api/form',
                           JSON.stringify({ title }),
                           { headers: this.httpPostHeader, responseType: 'text' });
   }

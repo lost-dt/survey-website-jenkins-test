@@ -20,7 +20,6 @@ export class FormListComponent implements OnInit {
     this.formService.getAllForms();
     this.formService.forms.subscribe(forms => {
       this.forms = forms;
-      // this.forms.push(new Form('abcd', 'First formGroup!', questions));
     });
   }
 

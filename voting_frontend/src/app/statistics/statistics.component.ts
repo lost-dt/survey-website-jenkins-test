@@ -20,7 +20,7 @@ export class StatisticsComponent implements OnInit {
   
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.statService.getStatsByFormId(params.get('formId'));
+      this.statService.getStatsByFormId(params.get('formHash'));
       this.statService.statObject.subscribe(statObj => {
         if (statObj.data.length) {
           this.formTitle = statObj.title;

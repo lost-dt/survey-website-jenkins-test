@@ -32,21 +32,22 @@ export class SurveyComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.formService.getFromById(params.get('formId')).subscribe(formData => {
+      this.formService.getFromByHash(params.get('formHash')).subscribe(formData => {
         this.formData = formData;
-      });
-      this.qs.getQuestionControls(this.formData.questions);
-      this.qs.questionControls.subscribe(questionControls => {
-        if (questionControls.length) {
-          this.questions = questionControls;
-          this.formGroup = this.qcs.toFormGroup(questionControls);
-        }
+        console.log(formData);
+        this.qs.getQuestionControls(this.formData.questions);
+        this.qs.questionControls.subscribe(questionControls => {
+          if (questionControls.length) {
+            this.questions = questionControls;
+            this.formGroup = this.qcs.toFormGroup(questionControls);
+          }
+        });
       });
     });
   }
 
   navigateToStats(params?: object) {
-    this.router.navigate([`stats/${this.formData.id}`], params);
+    this.router.navigate([`stats/${this.formData.hash}`], params);
   }
 
   onSubmit() {

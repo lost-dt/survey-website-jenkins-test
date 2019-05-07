@@ -51,9 +51,9 @@ export class QuestionService {
     this.questionControls.next(newQuestionControls);
   }
 
-  createQuestion(formId: string, title: string, type: string, options: string): Observable<any> {
+  createQuestion(formHash: string, title: string, type: string, options: string): Observable<any> {
     return this.http.post('api/question',
-                   JSON.stringify({ formId , title, type, options }),
+                   JSON.stringify({ formHash, title, type, options }),
                    { headers: this.httpPostHeader, responseType: 'text' });
   }
 

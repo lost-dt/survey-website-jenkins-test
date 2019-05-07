@@ -38,11 +38,11 @@ const appRoutes: Routes = [
     canActivate: [LoginRedirectGuard]
   },
   {
-    path: 'stats/:formId',
+    path: 'stats/:formHash',
     component: StatisticsComponent
   },
   {
-    path: ':formId',
+    path: ':formHash',
     component: SurveyComponent,
     canActivate: [SurveyRedirectGuard]
   },

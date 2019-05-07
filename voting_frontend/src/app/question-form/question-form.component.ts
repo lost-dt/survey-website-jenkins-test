@@ -10,7 +10,7 @@ import { QuestionService } from '../services/question.service';
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent {
-  @Input() formId: string;
+  @Input() formHash: string;
   inputTypes = ['text', 'radio', 'select'];
   type = 'text';
   title: string;
@@ -23,7 +23,7 @@ export class QuestionFormComponent {
     if (this.type === 'text') {
       this.options = '';
     }
-    this.questionService.createQuestion(this.formId, this.title, this.type, this.options)
+    this.questionService.createQuestion(this.formHash, this.title, this.type, this.options)
                         .subscribe(() => this.formService.getAllForms());
     LocalStorageService.clearUser();
   }

@@ -4,6 +4,9 @@
       <mat-panel-title>
         {{ form.title }}
       </mat-panel-title>
+      <mat-panel-description>
+        <a [routerLink]="['/', form.hash]">Go to survey page</a>
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <table mat-table [dataSource]="form.questions">
       <ng-container matColumnDef="id">
@@ -30,7 +33,7 @@
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row *matRowDef="let question; columns: columnsToDisplay"></tr>
     </table>
-    <app-question-form [formId]="form.id"></app-question-form>
+    <app-question-form [formHash]="form.hash"></app-question-form>
   </mat-expansion-panel>
 </mat-accordion>
 

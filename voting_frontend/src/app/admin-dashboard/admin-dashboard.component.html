@@ -4,14 +4,15 @@
   <button mat-raised-button color="basic" (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</button>
 </header>
 <form (ngSubmit)="createForm()" #newFormForm="ngForm">
-  <mat-form-field *ngSwitchCase="'text'">
-    <input matInput [formControlName]="title" name="title" placeholder="Enter title for new form..."/>
+  <label for="title-input">Create new form:</label>
+  <mat-form-field>
+    <input matInput name="title" id="title-input" [(ngModel)]="title" placeholder="Enter title for new form..."/>
     <mat-error *ngIf="newFormForm.invalid">
       Please enter some text
     </mat-error>
   </mat-form-field>
   <button mat-raised-button color="primary" type="submit"
-          [disabled]="newFormForm.form.invalid" >Submit new</button>
+          [disabled]="newFormForm.form.invalid" >Submit new form</button>
 </form>
 <div class="form-list">
   <h3>All added questions:</h3>

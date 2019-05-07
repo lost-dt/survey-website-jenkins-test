@@ -1,7 +1,7 @@
 <header>
   <h1>Survey | <a (click)="navigateToStats()">Survey statistics</a></h1>
 </header>
-<div class="container">
+<div class="container" *ngIf="formData">
   <h2>{{ formData.title }}</h2>
   <form (ngSubmit)="onSubmit()" *ngIf="formGroup" [formGroup]="formGroup">
 
