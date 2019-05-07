@@ -14,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "question")
-@Cacheable(false)
 @TableGenerator(name="tab", initialValue=0, allocationSize=1)
 public class Question {
     @Id
@@ -33,13 +32,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private Collection<Vote> votes;
 
-/*    @Fetch(FetchMode.SUBSELECT)
-    @Formula("(select count(*) from vote where vote.answer = true and vote.question_id = id)")
-    private int voteYesCount;
-
-    @Fetch(FetchMode.SUBSELECT)
-    @Formula("(select count(*) from vote where vote.answer = false and vote.question_id = id)")
-    private int voteNoCount;*/
+    @ManyToOne
+    @JoinColumn(name = "form_id", nullable=false)
+    private Form form;
 
     public Long getId() {
         return id;
@@ -57,23 +52,6 @@ public class Question {
         this.title = title;
     }
 
-
-/*    public int getVoteYesCount() {
-        return voteYesCount;
-    }
-
-    public void setVoteYesCount(int voteYesCount) {
-        this.voteYesCount = voteYesCount;
-    }
-
-    public int getVoteNoCount() {
-        return voteNoCount;
-    }
-
-    public void setVoteNoCount(int voteNoCount) {
-        this.voteNoCount = voteNoCount;
-    }*/
-
     public String getType() {
         return type;
     }
@@ -88,5 +66,13 @@ public class Question {
 
     public void setOptions(String options) {
         this.options = options;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
     }
 }

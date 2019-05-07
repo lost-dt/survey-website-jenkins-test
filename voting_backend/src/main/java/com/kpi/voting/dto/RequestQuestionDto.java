@@ -17,6 +17,9 @@ public class RequestQuestionDto {
     @NotNull
     private String options;
 
+    @NotNull
+    private String formHash;
+
 
     public String getTitle() {
         return title;
@@ -40,5 +43,13 @@ public class RequestQuestionDto {
 
     public void setOptions(String options) {
         this.options = options;
+    }
+
+    public String getFormHash() {
+        return formHash;
+    }
+
+    public void setFormHash(String formHash) {
+        this.formHash = formHash;
     }
 }

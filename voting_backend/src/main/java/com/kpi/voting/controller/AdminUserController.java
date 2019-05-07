@@ -58,7 +58,7 @@ public class AdminUserController {
     }
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> answer(@Valid @RequestBody RequestAdminUserDto adminUser){
+    public ResponseEntity<?> adminUser(@Valid @RequestBody RequestAdminUserDto adminUser){
         try {
             adminUserService.adminUser(adminUser);
             return new ResponseEntity<>(HttpStatus.OK);

@@ -1,6 +1,7 @@
 package com.kpi.voting.domain;
 
 import com.kpi.voting.dao.QuestionRepository;
+import com.kpi.voting.dao.entity.Form;
 import com.kpi.voting.dao.entity.Question;
 import com.kpi.voting.dto.RequestQuestionDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.naming.OperationNotSupportedException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -18,6 +20,8 @@ public class QuestionService {
 
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    private FormService formService;
 
 
     public Question getLastQuestion() {
@@ -27,6 +31,10 @@ public class QuestionService {
 
     public List<Question> getAllQuestions(){
         return questionRepository.findAll();
+    }
+
+    public List<Question> getQuestionsByFormId(Long id){
+        return questionRepository.getQuestionsByFormId(id);
     }
 
     @Transactional
@@ -47,20 +55,13 @@ public class QuestionService {
     }
 
 
-    public void printQuestionStatistics(Long id) {
-        Question updatedQuestion = this.getQuestion(id);
-
-        System.out.println("Updated statistics:");
-        System.out.println(updatedQuestion);
-        System.out.println("=========================");
-    }
-
-    private boolean createQuestion(RequestQuestionDto question) {
+    private boolean createQuestion(RequestQuestionDto question, Form form) {
         Question newQuestion = new Question();
 
         newQuestion.setOptions(question.getOptions());
         newQuestion.setTitle(question.getTitle());
         newQuestion.setType(question.getType());
+        newQuestion.setForm(form);
 
         newQuestion = questionRepository.save(newQuestion);
         questionRepository.flush();
@@ -70,7 +71,10 @@ public class QuestionService {
 
     public void question(RequestQuestionDto question) throws Exception {
 
-        boolean isQuestionCreated = createQuestion(question);
+        Form form = formService.getFormByHash(question.getFormHash());
+        if (Objects.isNull(form)) throw new OperationNotSupportedException("Form not found");
+
+        boolean isQuestionCreated = createQuestion(question, form);
         if (!isQuestionCreated) throw new OperationNotSupportedException("Some troubles occurred.");
     }
 }

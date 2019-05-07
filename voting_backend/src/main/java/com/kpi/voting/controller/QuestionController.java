@@ -38,6 +38,12 @@ public class QuestionController {
         return questionService.getQuestion(id);
     }
 
+    @GetMapping(value = "/form_{id}")
+    public @ResponseBody
+    List<Question> getQuestionsByFormId(@PathVariable("id") Long id){
+        return questionService.getQuestionsByFormId(id);
+    }
+
 
     @DeleteMapping(value = "all")
     public @ResponseBody
@@ -53,7 +59,7 @@ public class QuestionController {
 
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<?> answer(@Valid @RequestBody RequestQuestionDto question) {
+    public ResponseEntity<?> question(@Valid @RequestBody RequestQuestionDto question) {
         try {
             questionService.question(question);
             return new ResponseEntity<>(HttpStatus.OK);

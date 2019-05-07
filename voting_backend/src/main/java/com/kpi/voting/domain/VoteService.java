@@ -1,6 +1,7 @@
 package com.kpi.voting.domain;
 
 import com.kpi.voting.dao.VoteRepository;
+import com.kpi.voting.dao.entity.Form;
 import com.kpi.voting.dao.entity.Question;
 import com.kpi.voting.dto.RequestVoteDto;
 import com.kpi.voting.dao.entity.Vote;
@@ -25,8 +26,6 @@ public class VoteService {
 
         boolean isVoteCreated = createVote(vote, question);
         if (!isVoteCreated) throw new OperationNotSupportedException("Some troubles occurred.");
-
-        questionService.printQuestionStatistics(question.getId());
     }
 
     private boolean createVote(RequestVoteDto vote, Question question) {
@@ -55,6 +54,7 @@ public class VoteService {
         return question.getOptions();
     }
 
+    //Class for stats response
     public class StatsInfo{
         private String title;
         private String type;
@@ -103,6 +103,33 @@ public class VoteService {
         }
     }
 
+    public class FormResponse{
+        private String name;
+        private List<StatsInfo> stats;
+
+        public FormResponse(String name, List<StatsInfo> stats) {
+            this.name = name;
+            this.stats = stats;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public List<StatsInfo> getStats() {
+            return stats;
+        }
+
+        public void setStats(List<StatsInfo> stats) {
+            this.stats = stats;
+        }
+    }
+
+
     public StatsInfo getStats(Long id){
         StatsInfo statsInfo = new StatsInfo();
         HashMap<String, Integer> stats = new HashMap<String, Integer>();
@@ -135,5 +162,20 @@ public class VoteService {
             }
         }
         return allStats;
+    }
+
+    public List<StatsInfo> getStatsForForm(Form form){
+        List<StatsInfo> allStats = new ArrayList<>();
+        List<Question> questions = questionService.getQuestionsByFormId(form.getId());
+        for (Question question: questions){
+            if(!question.getType().equals("text")) {
+                allStats.add(getStats(question.getId()));
+            }
+        }
+        return allStats;
+    }
+
+    public FormResponse getFormStats(Form form){
+        return new FormResponse(form.getTitle(), getStatsForForm(form));
     }
 }
