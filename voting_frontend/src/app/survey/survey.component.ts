@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { Form } from '../shared/form.model';
+import { FormService } from '../services/form.service';
 import { QuestionBase } from '../shared/question-base';
 import { QuestionService } from '../services/question.service';
 import { QuestionControlService } from '../services/question-control.service';
@@ -15,34 +17,42 @@ import { UserService } from '../services/user.service';
   providers: [QuestionControlService]
 })
 export class SurveyComponent implements OnInit {
-  questions: QuestionBase<any>[] = [];
-  form: FormGroup;
-  isSubmitted = false;
+  public questions: QuestionBase<any>[] = [];
+  public formGroup: FormGroup;
+  public formData: Form;
+  public isSubmitted = false;
 
   constructor(private qcs: QuestionControlService,
+              private formService: FormService,
               private qs: QuestionService,
               private userService: UserService,
               private router: Router,
+              private route: ActivatedRoute,
               private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.qs.getQuestionControls();
-    this.qs.questionControls.subscribe(questionControls => {
-      if (questionControls.length) {
-        this.questions = questionControls;
-        this.form = this.qcs.toFormGroup(questionControls);
-      }
+    this.route.paramMap.subscribe(params => {
+      this.formService.getFromById(params.get('formId')).subscribe(formData => {
+        this.formData = formData;
+      });
+      this.qs.getQuestionControls(this.formData.questions);
+      this.qs.questionControls.subscribe(questionControls => {
+        if (questionControls.length) {
+          this.questions = questionControls;
+          this.formGroup = this.qcs.toFormGroup(questionControls);
+        }
+      });
     });
   }
 
-  navigateToStats(params) {
-    this.router.navigate(['stats'], params);
+  navigateToStats(params?: object) {
+    this.router.navigate([`stats/${this.formData.id}`], params);
   }
 
   onSubmit() {
     this.isSubmitted = true;
     this.userService.initUser();
-    this.qs.submitAnswers(this.form.value);
+    this.qs.submitAnswers(this.formGroup.value);
     this.snackBar.open('Thanks for participation!', 'Got it!', { duration: 7000 });
     this.navigateToStats({ queryParams: { disable: true } });
   }

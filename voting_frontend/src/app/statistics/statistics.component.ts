@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import { StatisticsService } from '../services/statistics.service';
@@ -16,10 +16,6 @@ export class StatisticsComponent implements OnInit {
   constructor(private statService: StatisticsService,
               private router: Router,
               private route: ActivatedRoute) { }
-
-  navigateToMain() {
-    this.router.navigate(['']);
-  }
   
   ngOnInit() {
     this.disableMainPageLink = this.route.snapshot.queryParamMap.get('disable') === 'true';

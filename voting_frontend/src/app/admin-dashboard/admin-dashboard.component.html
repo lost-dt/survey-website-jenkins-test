@@ -1,15 +1,20 @@
 <header>
-  <h1>Survey dashboard | <a (click)="navigateToMain()">Survey Page</a></h1>
+  <h1>Survey dashboard</h1>
 
   <button mat-raised-button color="basic" (click)="logout()"><mat-icon>exit_to_app</mat-icon> Logout</button>
 </header>
-<div class="question-list">
+<form (ngSubmit)="createForm()" #newFormForm="ngForm">
+  <mat-form-field *ngSwitchCase="'text'">
+    <input matInput [formControlName]="title" name="title" placeholder="Enter title for new form..."/>
+    <mat-error *ngIf="newFormForm.invalid">
+      Please enter some text
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit"
+          [disabled]="newFormForm.form.invalid" >Submit new</button>
+</form>
+<div class="form-list">
   <h3>All added questions:</h3>
   <app-question-list></app-question-list>
-</div>
-<mat-divider></mat-divider>
-<div class="add-questions">
-  <h3>Add new questions:</h3>
-  <app-question-form></app-question-form>
 </div>
 

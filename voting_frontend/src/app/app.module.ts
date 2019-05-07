@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule, MatRadioModule, MatInputModule, MatIconModule, MatSelectModule, MatTableModule,
-  MatCheckboxModule, MatCardModule, MatDividerModule, MatSnackBarModule } from '@angular/material';
+  MatCheckboxModule, MatCardModule, MatDividerModule, MatSnackBarModule, MatExpansionModule } from '@angular/material';
 
 import { AuthGuard } from './guards/auth.guard';
 import { LoginRedirectGuard } from './guards/login-redirect.guard';
@@ -22,7 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { StatisticsComponent } from './statistics/statistics.component';
 import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
-import { QuestionListComponent } from './question-list/question-list.component';
+import { FormListComponent } from './form-list/form-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { PlotComponent } from './plot/plot.component';
 
@@ -38,11 +38,11 @@ const appRoutes: Routes = [
     canActivate: [LoginRedirectGuard]
   },
   {
-    path: 'stats',
+    path: 'stats/:formId',
     component: StatisticsComponent
   },
   {
-    path: '',
+    path: ':formId',
     component: SurveyComponent,
     canActivate: [SurveyRedirectGuard]
   },
@@ -61,7 +61,7 @@ const appRoutes: Routes = [
     StatisticsComponent,
     SurveyComponent,
     QuestionComponent,
-    QuestionListComponent,
+    FormListComponent,
     QuestionFormComponent,
     PlotComponent,
   ],
@@ -85,7 +85,8 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatCardModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

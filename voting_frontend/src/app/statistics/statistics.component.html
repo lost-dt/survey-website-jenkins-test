@@ -1,5 +1,5 @@
 <header>
-  <h1>Survey statistics | <a *ngIf="!disableMainPageLink" (click)="navigateToMain()">Survey page</a></h1>
+  <h1>Survey statistics | <a *ngIf="!disableMainPageLink" routerLink="/">Survey page</a></h1>
 </header>
 <div *ngIf="answerStats.length">
   <app-plot *ngFor="let singleAnswerData of answerStats" [plotData]="singleAnswerData"

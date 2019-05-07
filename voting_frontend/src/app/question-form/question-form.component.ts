@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { QuestionService } from '../services/question.service';
+import { FormService } from '../services/form.service';
 import { LocalStorageService } from '../services/local-storage.service';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-question-form',
@@ -9,18 +10,21 @@ import { LocalStorageService } from '../services/local-storage.service';
   styleUrls: ['./question-form.component.css']
 })
 export class QuestionFormComponent {
+  @Input() formId: string;
   inputTypes = ['text', 'radio', 'select'];
   type = 'text';
   title: string;
   options = '';
 
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService,
+              private formService: FormService) {}
 
   onSubmit() {
     if (this.type === 'text') {
       this.options = '';
     }
-    this.questionService.createQuestion(this.title, this.type, this.options).subscribe(() => this.questionService.getQuestions());
+    this.questionService.createQuestion(this.formId, this.title, this.type, this.options)
+                        .subscribe(() => this.formService.getAllForms());
     LocalStorageService.clearUser();
   }
 }

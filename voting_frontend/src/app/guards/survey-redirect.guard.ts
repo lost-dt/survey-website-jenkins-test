@@ -16,7 +16,7 @@ export class SurveyRedirectGuard implements CanActivate {
       // new user so return true
       return true;
     }
-    // user that already submitted the form
+    // user that already submitted the formGroup
     this.snackBar.open('You have already submitted!', 'OK', { duration: 7000 });
     this.router.navigate(['stats'], { queryParams: { disable: true }});
     return false;
