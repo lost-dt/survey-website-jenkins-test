@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { StatisticsService } from '../services/statistics.service';
 import { StatData } from '../shared/stat-data.model';
@@ -11,6 +11,7 @@ import { StatData } from '../shared/stat-data.model';
 })
 export class StatisticsComponent implements OnInit {
   public answerStats: StatData[] = [];
+  public formTitle = '';
   public disableMainPageLink: boolean;
 
   constructor(private statService: StatisticsService,
@@ -18,12 +19,15 @@ export class StatisticsComponent implements OnInit {
               private route: ActivatedRoute) { }
   
   ngOnInit() {
-    this.disableMainPageLink = this.route.snapshot.queryParamMap.get('disable') === 'true';
-    this.statService.getStats();
-    this.statService.statData.subscribe(stats => {
-      if (stats.length) {
-        this.answerStats = stats;
-      }
+    this.route.paramMap.subscribe(params => {
+      this.statService.getStatsByFormId(params.get('formId'));
+      this.statService.statObject.subscribe(statObj => {
+        if (statObj.data.length) {
+          this.formTitle = statObj.title;
+          this.answerStats = statObj.data;
+        }
+      });
     });
+    this.disableMainPageLink = this.route.snapshot.queryParamMap.get('disable') === 'true';
   }
 }

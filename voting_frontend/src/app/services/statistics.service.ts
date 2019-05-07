@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {BehaviorSubject, throwError} from 'rxjs';
+import { ReplaySubject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { StatData } from '../shared/stat-data.model';
-import * as Highcharts from "highcharts";
+
+import { StatObject } from '../shared/stat-object.model';
 
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
-
-  public statData = new BehaviorSubject<StatData[]>([]);
+  public statObject = new ReplaySubject<StatObject>();
 
   constructor(private http: HttpClient) {}
 
-  getStats(): void {
-    this.http.get<StatData[]>(`api/vote/stats_all`).pipe(catchError(this.handleError)).subscribe(data => {
-      this.statData.next(data);
-    });
+  getStatsByFormId(formId: string): void {
+    this.http.get<StatObject>(`api/vote/stats_${formId}`)
+      .pipe(catchError(this.handleError))
+      .subscribe(statObject => {
+        this.statObject.next(statObject);
+      });
   }
 
   private handleError(error: HttpErrorResponse) {
