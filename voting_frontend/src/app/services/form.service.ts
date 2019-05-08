@@ -32,6 +32,10 @@ export class FormService {
                           { headers: this.httpPostHeader, responseType: 'text' });
   }
 
+  deleteForm(formHash: string): Observable<any> {
+    return this.http.delete(`api/form/hash_${formHash}`);
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

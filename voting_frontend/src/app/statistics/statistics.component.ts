@@ -12,6 +12,7 @@ import { StatData } from '../shared/stat-data.model';
 export class StatisticsComponent implements OnInit {
   public answerStats: StatData[] = [];
   public formTitle = '';
+  public formHash: string;
   public disableMainPageLink: boolean;
 
   constructor(private statService: StatisticsService,
@@ -20,7 +21,8 @@ export class StatisticsComponent implements OnInit {
   
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.statService.getStatsByFormId(params.get('formHash'));
+      this.formHash = params.get('formHash');
+      this.statService.getStatsByFormId(this.formHash);
       this.statService.statObject.subscribe(statObj => {
         if (statObj.stats.length) {
           this.formTitle = statObj.name;

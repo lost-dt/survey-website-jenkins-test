@@ -26,6 +26,7 @@ import { FormListComponent } from './form-list/form-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { PlotComponent } from './plot/plot.component';
 import { FormListItemComponent } from './form-list-item/form-list-item.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 const appRoutes: Routes = [
   {
@@ -48,6 +49,10 @@ const appRoutes: Routes = [
     canActivate: [SurveyRedirectGuard]
   },
   {
+    path: '',
+    component: MainPageComponent
+  },
+  {
     path: '**',
     component: PageNotFoundComponent
   }
@@ -66,6 +71,7 @@ const appRoutes: Routes = [
     QuestionFormComponent,
     PlotComponent,
     FormListItemComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,

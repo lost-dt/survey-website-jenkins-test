@@ -20,6 +20,10 @@ export class FormListItemComponent {
     this.formService.getFormByHash(this.form.hash).subscribe(form => this.form = form);
   }
 
+  deleteForm() {
+    this.formService.deleteForm(this.form.hash).subscribe(() => this.formService.getAllForms());
+  }
+
   deleteQuestion(questionId: number) {
     this.questionService.deleteQuestion(questionId).subscribe(() => this.updateForm());
   }

@@ -6,6 +6,7 @@ html {
 }
 
 body {
+  margin-bottom: 0;
   font-family: 'Roboto', Arial, sans-serif;
   height: 100%;
 }

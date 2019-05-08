@@ -1,5 +1,5 @@
 <header>
-  <h1>Survey statistics | <a *ngIf="!disableMainPageLink" routerLink="/">Survey page</a></h1>
+  <h1>Survey statistics | <a *ngIf="!disableMainPageLink" [routerLink]="['/', this.formHash]">Survey page</a></h1>
 </header>
 <h3>{{ formTitle }}</h3>
 <div *ngIf="answerStats.length">
