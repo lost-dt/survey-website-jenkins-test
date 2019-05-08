@@ -25,6 +25,7 @@ import { QuestionComponent } from './question/question.component';
 import { FormListComponent } from './form-list/form-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
 import { PlotComponent } from './plot/plot.component';
+import { FormListItemComponent } from './form-list-item/form-list-item.component';
 
 const appRoutes: Routes = [
   {
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
     FormListComponent,
     QuestionFormComponent,
     PlotComponent,
+    FormListItemComponent,
   ],
   imports: [
     BrowserModule,

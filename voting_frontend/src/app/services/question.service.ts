@@ -10,8 +10,6 @@ import { TextQuestion } from '../shared/question-text';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
-
-  public questions = new BehaviorSubject<Question[]>([]);
   public questionControls = new BehaviorSubject<QuestionBase<any>[]>([]);
 
   private httpPostHeader =  new HttpHeaders({
@@ -68,7 +66,7 @@ export class QuestionService {
                      JSON.stringify({ answer: Array.isArray(answers[questionId]) ? answers[questionId].join(', ') : answers[questionId],
                                       questionId: questionId.slice('question'.length),
                                       userId: randId }),
-                     { headers: this.httpPostHeader, responseType: 'text' }).subscribe(res => console.log(res));
+                     { headers: this.httpPostHeader, responseType: 'text' }).subscribe();
     });
   }
 }

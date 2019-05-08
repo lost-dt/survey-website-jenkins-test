@@ -22,7 +22,7 @@ export class FormService {
     });
   }
 
-  getFromByHash(formHash: string): Observable<Form> {
+  getFormByHash(formHash: string): Observable<Form> {
     return this.http.get<Form>(`api/form/data_${formHash}`).pipe(catchError(this.handleError));
   }
 

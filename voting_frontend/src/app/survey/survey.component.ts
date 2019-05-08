@@ -32,9 +32,8 @@ export class SurveyComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.formService.getFromByHash(params.get('formHash')).subscribe(formData => {
+      this.formService.getFormByHash(params.get('formHash')).subscribe(formData => {
         this.formData = formData;
-        console.log(formData);
         this.qs.getQuestionControls(this.formData.questions);
         this.qs.questionControls.subscribe(questionControls => {
           if (questionControls.length) {
@@ -47,12 +46,12 @@ export class SurveyComponent implements OnInit {
   }
 
   navigateToStats(params?: object) {
-    this.router.navigate([`stats/${this.formData.hash}`], params);
+    this.router.navigate(['stats', this.formData.hash], params);
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    this.userService.initUser();
+    this.userService.initUser(this.formData.hash);
     this.qs.submitAnswers(this.formGroup.value);
     this.snackBar.open('Thanks for participation!', 'Got it!', { duration: 7000 });
     this.navigateToStats({ queryParams: { disable: true } });

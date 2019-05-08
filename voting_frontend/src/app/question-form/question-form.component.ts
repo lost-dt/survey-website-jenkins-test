@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { FormService } from '../services/form.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { QuestionService } from '../services/question.service';
 
@@ -11,20 +10,20 @@ import { QuestionService } from '../services/question.service';
 })
 export class QuestionFormComponent {
   @Input() formHash: string;
+  @Output() newQuestionAdded = new EventEmitter();
   inputTypes = ['text', 'radio', 'select'];
   type = 'text';
   title: string;
   options = '';
 
-  constructor(private questionService: QuestionService,
-              private formService: FormService) {}
+  constructor(private questionService: QuestionService) {}
 
   onSubmit() {
     if (this.type === 'text') {
       this.options = '';
     }
     this.questionService.createQuestion(this.formHash, this.title, this.type, this.options)
-                        .subscribe(() => this.formService.getAllForms());
-    LocalStorageService.clearUser();
+      .subscribe(() => this.newQuestionAdded.emit());
+    LocalStorageService.clearSubmittedForm(this.formHash);
   }
 }

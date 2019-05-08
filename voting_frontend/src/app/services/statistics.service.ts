@@ -11,8 +11,8 @@ export class StatisticsService {
 
   constructor(private http: HttpClient) {}
 
-  getStatsByFormId(formId: string): void {
-    this.http.get<StatObject>(`api/vote/stats_${formId}`)
+  getStatsByFormId(formHash: string): void {
+    this.http.get<StatObject>(`api/vote/stats_${formHash}`)
       .pipe(catchError(this.handleError))
       .subscribe(statObject => {
         this.statObject.next(statObject);
