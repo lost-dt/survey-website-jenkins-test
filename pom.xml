@@ -21,7 +21,6 @@
     </properties>
 
     <modules>
-        <module>voting_frontend</module>
         <module>voting_backend</module>
     </modules>
 
